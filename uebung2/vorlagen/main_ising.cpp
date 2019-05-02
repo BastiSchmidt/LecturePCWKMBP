@@ -59,7 +59,7 @@ int main(int argc, char* argv[]){
   //show values:
   std::cout << "time= "<<simulation_time<<", extern field= "<<extern_field_B<<", lattice size= "<<lattice_size<<", invTemperature= "<<temp<<std::endl;
   
-  // ############ hier we start with the simulations ################## //
+  // ############ here we start with the simulations ################## //
   
   // we use the simulation class
   std::cout << "init Knut" <<std::endl;

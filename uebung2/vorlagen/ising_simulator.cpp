@@ -34,33 +34,49 @@ void ising_simulator::set_beta(int beta_){
 }
 
 // neigbor requests -> nur eine Möglichkeit für periodische randbedingungen
-/* ############ add your ideas ############ */
+
 inline int ising_simulator::getLeftNeigbor(int x){
-
+    if ((x - 1) < 0)
+        return (x + lattice_size - 1);
+    else
+        return (x-1);
 }
-/* ############ add your ideas ############ */
+
 inline int ising_simulator::getRightNeigbor(int x){
-
+    if ((x + 1) > (lattice_size - 1))
+        return (x - lattice_size + 1);
+    else
+        return (x+1);
 }
-/* ############ add your ideas ############ */
+
 inline int ising_simulator::getLowerNeigbor(int y){
-
+    if ((y + 1) > (lattice_size - 1))
+        return (y - lattice_size + 1);
+    else 
+        return (y + 1);
 }
-/* ############ add your ideas ############ */
-inline int ising_simulator::getUpperNeigbor(int y){
 
+inline int ising_simulator::getUpperNeigbor(int y){
+    if ((y - 1) < 0)
+        return (y + lattice_size - 1);
+    else
+        return (y - 1);
 }
 
 // calculate observables:
 // calculate magnetization of a specific conformation
 double ising_simulator::calc_magnetization(){
   double M(0.0);
+  for (int i=0; i<lattice.size(); i++){
+      M += lattice.at(i); 
+  }
+  return (M/lattice.size());
+      
   
-  /* ############ add your ideas ############ 
+  /* 
   M = 1/N * ∑ (i=1 -> N) S_i
   */
-  
-  return M;
+
 }
 
 // calculate single spins energy (use this function again for task Importance Sampling)
@@ -106,12 +122,20 @@ void ising_simulator::randomize(){
 
 //perform a MCS
 void ising_simulator::perform_mcs(int time){
-  int counter(0); // check for moves
-
-  /* ############ add your ideas ############ */
-  /* ############ add your ideas ############ */
-  /* ############ add your ideas ############ */
-  
+  int counter(0); // check for moves, counter only increases if changes appear, at T=0 nothing changes anymore
+  for (int t=0, t < time, t++)
+      for (int i, i<lattice.size(), i++)
+          int x(dist_int(rnd_mt));
+          int y(dist_int(rnd_mt));
+          double Delta_E(-2 * calc_single_spin_energy(x,y));
+          double flip_prob(exp(Delta_E * beta));
+          double rand(dist_double(rnd_mt));
+          if (rand < flip_prob){
+              lattice.at(x + lattice_size * y) *= -1;
+              counter += 1;
+          }
+          
+    
   if(counter==0) 
     std::cout<<"Keine akzeptierte Bewegung in aktuellem Monte Carlo Schritt!!\n"; 
 }
